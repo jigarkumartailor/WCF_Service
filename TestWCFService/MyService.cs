@@ -13,9 +13,9 @@ namespace TestWCFService
             return "Mr." + name;
         }
 
-        public string GetResult(int SId, string Name, int m1, int m2, int m3)
+        public string GetResult(Student s)
         {
-            double Avg = (m1 + m2 + m3) / 3;
+            double Avg = (s.M1 + s.M2 + s.M3) / 3;
             if (Avg > 35)
             {
                 return "Pass";
@@ -30,6 +30,26 @@ namespace TestWCFService
         public string GetString()
         {
             return "Jigar Tailor";
+        }
+
+        public Student GetTopper(List<Student> LS)
+        {
+            Student topper = new Student();
+            int topperId = 0;
+            int highestMark = 0;
+
+            foreach (Student stud in LS)
+            {
+                int total= stud.M1 + stud.M2 + stud.M3;
+                if (highestMark < total)
+                {
+                    highestMark = total;
+                    topperId = stud.sId;
+                }
+                    
+            }
+            topper = LS.Where(s => s.sId == topperId).SingleOrDefault();
+            return topper;
         }
 
         public int MaxArraynumber(int[] arr)
