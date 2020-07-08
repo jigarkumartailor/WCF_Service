@@ -27,6 +27,8 @@ namespace TestWCFService
 
         [OperationContract]
         Student GetTopper(List<Student> LS);
+        [OperationContract]
+        List<Book> GetBooks();
 
     }
 

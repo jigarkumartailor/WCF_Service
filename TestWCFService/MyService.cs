@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,27 @@ namespace TestWCFService
 {
     class MyService : IMyService
     {
+        public List<Book> GetBooks()
+        {
+            List<Book> books = new List<Book>();
+
+            string conString = "Data Source=DOSTI;Initial Catalog=BookListRazor;Integrated Security=True";
+            SqlConnection conn = new SqlConnection(conString);
+
+            SqlCommand cmd = new SqlCommand("Select * from Book",conn);
+            conn.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Book book = new Book();
+                book.BookId = Convert.ToInt32(reader[0]);
+                book.BookName = reader[1].ToString();
+                books.Add(book);
+            }
+            return books;
+        }
+
         public string GetMessage(string name)
         {
             return "Mr." + name;
